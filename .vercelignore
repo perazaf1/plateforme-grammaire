@@ -1,0 +1,15 @@
+# Fichiers sources lourds ou privés
+*.pdf
+*.tex
+*.aux
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.docx
+PROMPT_FICHES_REVISION.md
+Fiches_Revision/
+.git/
+.gitignore
+.DS_Store
