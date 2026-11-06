@@ -39,51 +39,51 @@
 
   <!-- BARRE DE NAVIGATION PAR ONGLETS -->
   <nav class="nav-tabs-wrapper" aria-label="Navigation des modules">
-    <ul class="nav-tabs">
-      <li>
-        <button class="nav-tab-btn active" data-tab="phrases" aria-selected="true">
+    <ul class="nav-tabs" role="tablist">
+      <li role="presentation">
+        <button id="tab-btn-phrases" class="nav-tab-btn active" data-tab="phrases" role="tab" aria-controls="tab-phrases" aria-selected="true">
           <span>📝 Phrases d'Analyse</span>
           <span class="nav-badge">15</span>
         </button>
       </li>
-      <li>
-        <button class="nav-tab-btn" data-tab="quiz" aria-selected="false">
+      <li role="presentation">
+        <button id="tab-btn-quiz" class="nav-tab-btn" data-tab="quiz" role="tab" aria-controls="tab-quiz" aria-selected="false">
           <span>🎯 Quiz Nature & Fonction</span>
           <span class="nav-badge">17</span>
         </button>
       </li>
-      <li>
-        <button class="nav-tab-btn" data-tab="methode" aria-selected="false">
+      <li role="presentation">
+        <button id="tab-btn-methode" class="nav-tab-btn" data-tab="methode" role="tab" aria-controls="tab-methode" aria-selected="false">
           <span>📐 Protocole 4 Étapes</span>
           <span class="nav-badge">Pas-à-pas</span>
         </button>
       </li>
-      <li>
-        <button class="nav-tab-btn" data-tab="orthographe" aria-selected="false">
+      <li role="presentation">
+        <button id="tab-btn-orthographe" class="nav-tab-btn" data-tab="orthographe" role="tab" aria-controls="tab-orthographe" aria-selected="false">
           <span>✒️ Orthographe & Accords</span>
           <span class="nav-badge">12</span>
         </button>
       </li>
-      <li>
-        <button class="nav-tab-btn" data-tab="dictees" aria-selected="false">
+      <li role="presentation">
+        <button id="tab-btn-dictees" class="nav-tab-btn" data-tab="dictees" role="tab" aria-controls="tab-dictees" aria-selected="false">
           <span>🎧 Dictées Interactives</span>
           <span class="nav-badge">Audio</span>
         </button>
       </li>
-      <li>
-        <button class="nav-tab-btn" data-tab="grille" aria-selected="false">
+      <li role="presentation">
+        <button id="tab-btn-grille" class="nav-tab-btn" data-tab="grille" role="tab" aria-controls="tab-grille" aria-selected="false">
           <span>📋 Grille d'Examen</span>
           <span class="nav-badge">Outil</span>
         </button>
       </li>
-      <li>
-        <button class="nav-tab-btn" data-tab="memento" aria-selected="false">
+      <li role="presentation">
+        <button id="tab-btn-memento" class="nav-tab-btn" data-tab="memento" role="tab" aria-controls="tab-memento" aria-selected="false">
           <span>📖 Mémento & Règles</span>
           <span class="nav-badge">Cours</span>
         </button>
       </li>
-      <li>
-        <button class="nav-tab-btn" data-tab="arts" aria-selected="false">
+      <li role="presentation">
+        <button id="tab-btn-arts" class="nav-tab-btn" data-tab="arts" role="tab" aria-controls="tab-arts" aria-selected="false">
           <span>🏛️ Culture & Arts (ICP)</span>
           <span class="nav-badge">Bonus</span>
         </button>
@@ -95,7 +95,7 @@
   <main class="main-content">
 
     <!-- ONGLET 1 : L'EXERCICE DES 10 PHRASES -->
-    <section id="tab-phrases" class="tab-pane active" aria-labelledby="10-phrases">
+    <section id="tab-phrases" class="tab-pane active" role="tabpanel" aria-labelledby="tab-btn-phrases">
       <div class="section-intro">
         <span class="badge-tag">Exercice d'application officiel</span>
         <h2>L'Atelier des 10 Phrases</h2>
@@ -110,7 +110,7 @@
     </section>
 
     <!-- ONGLET 2 : QUIZ NATURE & FONCTION -->
-    <section id="tab-quiz" class="tab-pane" aria-labelledby="quiz-interactif">
+    <section id="tab-quiz" class="tab-pane" role="tabpanel" aria-labelledby="tab-btn-quiz">
       <div class="section-intro">
         <span class="badge-tag">Entraînement réflexe</span>
         <h2>Quiz Interactif : Nature vs Fonction</h2>
@@ -125,7 +125,7 @@
     </section>
 
     <!-- ONGLET 3 : LE PROTOCOLE EN 4 ÉTAPES -->
-    <section id="tab-methode" class="tab-pane" aria-labelledby="protocole-methode">
+    <section id="tab-methode" class="tab-pane" role="tabpanel" aria-labelledby="tab-btn-methode">
       <div class="section-intro">
         <span class="badge-tag">Méthode pas-à-pas</span>
         <h2>Le Protocole de Découpage en 4 Étapes</h2>
@@ -140,7 +140,7 @@
     </section>
 
     <!-- ONGLET 4 : ORTHOGRAPHE & ACCORDS -->
-    <section id="tab-orthographe" class="tab-pane" aria-labelledby="orthographe-accords">
+    <section id="tab-orthographe" class="tab-pane" role="tabpanel" aria-labelledby="tab-btn-orthographe">
       <div class="section-intro">
         <span class="badge-tag">Maîtrise de la langue</span>
         <h2>Défis Orthographe & Règles d'Accord</h2>
@@ -155,7 +155,7 @@
     </section>
 
     <!-- ONGLET DICTÉES INTERACTIVES -->
-    <section id="tab-dictees" class="tab-pane" aria-labelledby="dictees-interactives">
+    <section id="tab-dictees" class="tab-pane" role="tabpanel" aria-labelledby="tab-btn-dictees">
       <div class="section-intro">
         <span class="badge-tag">Entraînement auditif & orthographe de concours</span>
         <h2>Dictées Vocales Interactives</h2>
@@ -170,7 +170,7 @@
     </section>
 
     <!-- ONGLET 5 : GRILLE D'EXAMEN NUMÉRIQUE -->
-    <section id="tab-grille" class="tab-pane" aria-labelledby="grille-examen">
+    <section id="tab-grille" class="tab-pane" role="tabpanel" aria-labelledby="tab-btn-grille">
       <div class="section-intro">
         <span class="badge-tag">Simulateur d'épreuve</span>
         <h2>La Grille d'Examen Officielle</h2>
@@ -186,7 +186,7 @@
             <button class="btn-secondary" id="load-preset-btn">📥 Charger l'exemple guidé</button>
             <button class="btn-secondary" id="clear-grid-btn">🗑️ Effacer la grille</button>
           </div>
-          <button class="btn-secondary" onclick="window.print()">🖨️ Imprimer la grille</button>
+          <button class="btn-secondary" id="print-grid-btn">🖨️ Imprimer la grille</button>
         </div>
       </div>
 
@@ -209,7 +209,7 @@
     </section>
 
     <!-- ONGLET 6 : MÉMENTO & RÈGLES -->
-    <section id="tab-memento" class="tab-pane" aria-labelledby="memento-cours">
+    <section id="tab-memento" class="tab-pane" role="tabpanel" aria-labelledby="tab-btn-memento">
       <div class="section-intro">
         <span class="badge-tag">Fiche de cours condensée</span>
         <h2>Mémento & Règles Grammaticales</h2>
@@ -223,7 +223,7 @@
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" id="memento-search" class="search-input" placeholder="Rechercher une notion (ex: pronom, COD, attribut, préposition, adverbe...)">
+        <input type="search" id="memento-search" class="search-input" aria-label="Rechercher une notion" placeholder="Rechercher une notion (ex: pronom, COD, attribut, préposition, adverbe...)">
       </div>
 
       <div id="memento-content">
@@ -232,7 +232,7 @@
     </section>
 
     <!-- ONGLET 7 : BONUS CONNAISSANCE DES ARTS -->
-    <section id="tab-arts" class="tab-pane" aria-labelledby="arts-culture">
+    <section id="tab-arts" class="tab-pane" role="tabpanel" aria-labelledby="tab-btn-arts">
       <div class="section-intro">
         <span class="badge-tag">Culture Générale & Concours ICP</span>
         <h2>Quiz Connaissance des Arts (Cours 1 à 5)</h2>
@@ -264,6 +264,7 @@
 
   <!-- SCRIPTS -->
   <script src="js/data.js"></script>
+  <script src="js/diff.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

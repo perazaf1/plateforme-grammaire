@@ -5,6 +5,17 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   // ==========================================
+  // UTILITAIRES
+  // ==========================================
+  const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  }[char]));
+
+  // ==========================================
   // ÉTAT GLOBAL DE L'APPLICATION
   // ==========================================
   const state = {
@@ -75,8 +86,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const tabButtons = document.querySelectorAll(".nav-tab-btn");
     const tabPanes = document.querySelectorAll(".tab-pane");
 
-    function switchTab(tabId) {
-      if (!tabId) return;
+    function switchTab(tabId, updateHash = true) {
+      if (!tabId || !document.getElementById(`tab-${tabId}`)) return;
       state.activeTab = tabId;
 
       if ('speechSynthesis' in window) {
@@ -86,22 +97,43 @@ document.addEventListener("DOMContentLoaded", () => {
       tabButtons.forEach(btn => {
         const isActive = btn.getAttribute("data-tab") === tabId;
         btn.classList.toggle("active", isActive);
-        btn.setAttribute("aria-selected", isActive);
+        btn.setAttribute("aria-selected", String(isActive));
+        btn.tabIndex = isActive ? 0 : -1;
       });
 
       tabPanes.forEach(pane => {
-        pane.classList.toggle("active", pane.id === `tab-${tabId}`);
+        const isActive = pane.id === `tab-${tabId}`;
+        pane.classList.toggle("active", isActive);
+        pane.hidden = !isActive;
       });
 
-      window.location.hash = tabId;
+      if (updateHash && window.location.hash !== `#${tabId}`) {
+        window.location.hash = tabId;
+      }
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     tabButtons.forEach(btn => {
       btn.addEventListener("click", () => {
-        const tabId = btn.getAttribute("data-tab");
-        switchTab(tabId);
+        switchTab(btn.getAttribute("data-tab"));
       });
+
+      // Flèches gauche/droite : navigation clavier standard des onglets
+      btn.addEventListener("keydown", (event) => {
+        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+        event.preventDefault();
+        const buttons = Array.from(tabButtons);
+        const offset = event.key === "ArrowRight" ? 1 : -1;
+        const next = buttons[(buttons.indexOf(btn) + offset + buttons.length) % buttons.length];
+        next.focus();
+        switchTab(next.getAttribute("data-tab"));
+      });
+    });
+
+    window.addEventListener("hashchange", () => {
+      const hash = window.location.hash.replace("#", "");
+      const tabId = hash && document.getElementById(`tab-${hash}`) ? hash : "phrases";
+      switchTab(tabId, false);
     });
 
     // Hash initial ou par défaut
@@ -109,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (initialHash && document.getElementById(`tab-${initialHash}`)) {
       switchTab(initialHash);
     } else {
-      switchTab("phrases");
+      switchTab("phrases", false);
     }
   }
 
@@ -136,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ${isDone ? '<span class="stat-chip" style="background:#eaf6ee; color:#176d3f; border-color:#bce1ca;">✓ Complétée</span>' : ''}
       </div>
       <div class="progress-indicator">
-        Progression : ${Object.keys(state.stats.completedPhrases).length} / ${total}
+        Progression : ${Math.min(Object.keys(state.stats.completedPhrases).length, total)} / ${total}
       </div>
     </div>`;
 
@@ -171,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (opt === current.natureExacte) optClass += " correct";
         else if (state.dixPhrases.selectedNature === opt) optClass += " wrong";
       }
-      natureOptions += `<button class="${optClass}" data-type="nature" data-val="${opt}" ${state.dixPhrases.isValidated ? "disabled" : ""}>
+      natureOptions += `<button class="${optClass}" data-type="nature" data-val="${opt}" aria-pressed="${state.dixPhrases.selectedNature === opt}" ${state.dixPhrases.isValidated ? "disabled" : ""}>
         <span>${opt}</span>
         <span class="radio-indicator"></span>
       </button>`;
@@ -189,7 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (opt === current.fonctionExacte) optClass += " correct";
         else if (state.dixPhrases.selectedFonction === opt) optClass += " wrong";
       }
-      fonctionOptions += `<button class="${optClass}" data-type="fonction" data-val="${opt}" ${state.dixPhrases.isValidated ? "disabled" : ""}>
+      fonctionOptions += `<button class="${optClass}" data-type="fonction" data-val="${opt}" aria-pressed="${state.dixPhrases.selectedFonction === opt}" ${state.dixPhrases.isValidated ? "disabled" : ""}>
         <span>${opt}</span>
         <span class="radio-indicator"></span>
       </button>`;
@@ -230,7 +262,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const allOk = isNatureOk && isFonctionOk;
 
       feedbackHtml = `
-        <div class="feedback-box ${allOk ? 'success' : 'error'}">
+        <div class="feedback-box ${allOk ? 'success' : 'error'}" role="status">
           <h4>
             ${allOk ? '✓ Analyse parfaitement exacte !' : '✕ Rectification pédagogique'}
           </h4>
@@ -291,9 +323,13 @@ document.addEventListener("DOMContentLoaded", () => {
         
         state.stats.tentatives++;
         if (isOk) {
-          state.stats.scoreTotal += 10;
+          // Les points ne sont gagnés qu'une fois par phrase (le bouton
+          // « Réessayer » permet de s'entraîner sans farmer le score).
+          if (!state.stats.completedPhrases[current.id]) {
+            state.stats.scoreTotal += 10;
+            state.stats.completedPhrases[current.id] = true;
+          }
           state.stats.streak++;
-          state.stats.completedPhrases[current.id] = true;
         } else {
           state.stats.streak = 0;
         }
@@ -373,7 +409,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (idx === current.reponseCorrecte) optClass += " correct";
         else if (state.quiz.selectedOption === idx) optClass += " wrong";
       }
-      html += `<button class="${optClass}" data-quiz-opt="${idx}" ${state.quiz.isValidated ? "disabled" : ""}>
+      html += `<button class="${optClass}" data-quiz-opt="${idx}" aria-pressed="${state.quiz.selectedOption === idx}" ${state.quiz.isValidated ? "disabled" : ""}>
         <span>${opt}</span>
       </button>`;
     });
@@ -383,7 +419,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (state.quiz.isValidated) {
       const isSuccess = state.quiz.selectedOption === current.reponseCorrecte;
       html += `
-        <div class="feedback-box ${isSuccess ? 'success' : 'error'}">
+        <div class="feedback-box ${isSuccess ? 'success' : 'error'}" role="status">
           <h4>${isSuccess ? '✓ Bonne réponse !' : '✕ Erreur'}</h4>
           <div class="feedback-content">
             <p>${current.explication}</p>
@@ -577,6 +613,32 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       `;
     } else if (state.methode.currentEtape === 4) {
+      // Une ligne = un groupe fonctionnel, comme sur la copie d'examen.
+      const tousBlocs = casData.etape2.blocs || casData.etape2.propositions.flatMap(p => p.blocs);
+      const ordreBlocs = [];
+      const motsParBloc = {};
+      casData.etape3.mots.forEach(m => {
+        const bloc = m.bloc || "Autres mots";
+        if (!motsParBloc[bloc]) {
+          ordreBlocs.push(bloc);
+          motsParBloc[bloc] = [];
+        }
+        motsParBloc[bloc].push(m);
+      });
+
+      const lignesGrille = ordreBlocs.map(bloc => {
+        const def = tousBlocs.find(b => b.bloc === bloc) || {};
+        const mots = motsParBloc[bloc];
+        return `
+          <tr>
+            <td><strong>${bloc}</strong></td>
+            <td style="color:var(--accent-burgundy); font-weight:600;">${def.fonction || "—"}</td>
+            <td>${mots.map(m => `<div><strong>${m.mot}</strong> : ${m.nature}</div>`).join("")}</td>
+            <td>${mots.map(m => `<div>${m.fonctionInterne}</div>`).join("")}</td>
+          </tr>
+        `;
+      }).join("");
+
       stepContent += `
         <p style="margin-bottom:1rem;">Voici le rendu complet tel qu'il doit figurer sur votre copie d'examen :</p>
         <div class="exam-table-container">
@@ -589,20 +651,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 <th>4. Fonction interne du mot</th>
               </tr>
             </thead>
-            <tbody>
-              ${casData.etape3.mots.map(m => `
-                <tr>
-                  <td><strong>${m.mot}</strong></td>
-                  <td style="color:var(--accent-burgundy);">${m.fonctionInterne.includes('Sujet') ? 'Sujet' : m.fonctionInterne.includes('COD') ? 'COD' : m.fonctionInterne.includes('COI') ? 'COI' : m.fonctionInterne.includes('lieu') ? 'CC de lieu' : 'Élément du bloc'}</td>
-                  <td>${m.nature}</td>
-                  <td>${m.fonctionInterne}</td>
-                </tr>
-              `).join("")}
-            </tbody>
+            <tbody>${lignesGrille}</tbody>
           </table>
         </div>
         <div style="display:flex; justify-content:flex-end; margin-top:1rem;">
-          <button class="btn-secondary" onclick="window.print()">
+          <button class="btn-secondary" id="print-methode-btn">
             🖨️ Imprimer la grille pour réviser
           </button>
         </div>
@@ -627,6 +680,9 @@ document.addEventListener("DOMContentLoaded", () => {
         renderMethode();
       });
     });
+
+    const printBtn = container.querySelector("#print-methode-btn");
+    if (printBtn) printBtn.addEventListener("click", () => window.print());
   }
 
   // ==========================================
@@ -665,7 +721,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (idx === current.reponseCorrecte) optClass += " correct";
         else if (state.ortho.selectedOption === idx) optClass += " wrong";
       }
-      html += `<button class="${optClass}" data-ortho-opt="${idx}" ${state.ortho.isValidated ? "disabled" : ""}>
+      html += `<button class="${optClass}" data-ortho-opt="${idx}" aria-pressed="${state.ortho.selectedOption === idx}" ${state.ortho.isValidated ? "disabled" : ""}>
         <span>${opt}</span>
       </button>`;
     });
@@ -675,7 +731,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (state.ortho.isValidated) {
       const isOk = state.ortho.selectedOption === current.reponseCorrecte;
       html += `
-        <div class="feedback-box ${isOk ? 'success' : 'error'}">
+        <div class="feedback-box ${isOk ? 'success' : 'error'}" role="status">
           <h4>${isOk ? '✓ Accord / Orthographe parfaite !' : '✕ Erreur de graphie'}</h4>
           <div class="feedback-content">
             <p><strong>Règle d'or :</strong> ${current.regle}</p>
@@ -845,7 +901,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <p style="font-size:0.95rem; margin-bottom:0.5rem; color:var(--ink-secondary);">
         Tapez le texte ci-dessous au rythme de la lecture vocale :
       </p>
-      <textarea class="dictation-input-area" id="dictee-text-input" placeholder="Écoutez et écrivez ici... Prenez garde aux accords des participes passés et aux homophones.">${state.dictees.userText}</textarea>
+      <textarea class="dictation-input-area" id="dictee-text-input" aria-label="Texte de la dictée" placeholder="Écoutez et écrivez ici... Prenez garde aux accords des participes passés et aux homophones.">${escapeHtml(state.dictees.userText)}</textarea>
 
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; font-size:0.85rem; color:var(--ink-muted);">
         <span id="dictee-word-count">${state.dictees.userText.trim() ? state.dictees.userText.trim().split(/\s+/).length : 0} mot(s) saisi(s)</span>
@@ -866,7 +922,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (state.dictees.isValidated && state.dictees.diff) {
       const diff = state.dictees.diff;
       html += `
-        <div class="dictation-score-banner" style="margin-top:2rem;">
+        <div class="dictation-score-banner" style="margin-top:2rem;" role="status">
           <div>
             <div class="dictation-score-badge">${diff.score} / 20</div>
             <p style="font-weight:600; color:var(--ink-primary); margin:0.25rem 0 0;">${diff.appreciation}</p>
@@ -965,6 +1021,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (inputArea) {
       inputArea.addEventListener("input", (e) => {
         state.dictees.userText = e.target.value;
+        // Une nouvelle saisie autorise une nouvelle correction.
+        state.dictees.isValidated = false;
         const count = state.dictees.userText.trim() ? state.dictees.userText.trim().split(/\s+/).length : 0;
         const countEl = container.querySelector("#dictee-word-count");
         if (countEl) countEl.textContent = `${count} mot(s) saisi(s)`;
@@ -984,42 +1042,40 @@ document.addEventListener("DOMContentLoaded", () => {
     const validerBtn = container.querySelector("#btn-valider-dictee");
     if (validerBtn) {
       validerBtn.addEventListener("click", () => {
+        // Évite de créditer deux fois le score sur un double clic.
+        if (state.dictees.isValidated) return;
         stopVoice();
         state.dictees.isValidated = true;
-        
-        // Calcul du diff
+
+        // Alignement mot à mot : une omission ne décale pas toute la suite.
         const expectedWords = current.texteComplet.trim().split(/\s+/);
-        const userWords = state.dictees.userText.trim().split(/\s+/);
+        const userWords = state.dictees.userText.trim() ? state.dictees.userText.trim().split(/\s+/) : [];
+        const tokens = GrammarDiff.diffWords(expectedWords, userWords);
 
         let correctCount = 0;
         let errorsCount = 0;
-        let renderedTokens = [];
-
-        function cleanToken(w) {
-          return w.replace(/[.,;:!?«»"()]/g, "").trim();
-        }
-
-        for (let i = 0; i < expectedWords.length; i++) {
-          const exp = expectedWords[i];
-          const usr = userWords[i];
-
-          if (!usr) {
-            renderedTokens.push(`<span class="diff-token missing" title="Mot manquant">[manquant : ${exp}]</span>`);
-            errorsCount++;
-          } else if (cleanToken(exp) === cleanToken(usr)) {
-            renderedTokens.push(`<span class="diff-token correct">${exp}</span>`);
+        const renderedTokens = tokens.map((token) => {
+          if (token.type === "correct") {
             correctCount++;
-          } else if (cleanToken(exp).toLowerCase() === cleanToken(usr).toLowerCase()) {
-            renderedTokens.push(`<span class="diff-token error" title="Erreur d'accent ou de majuscule">${exp} (écrit : ${usr})</span>`);
-            errorsCount++;
-          } else {
-            renderedTokens.push(`<span class="diff-token error" title="Erreur orthographique">${exp} (écrit : ${usr})</span>`);
-            errorsCount++;
+            return `<span class="diff-token correct">${escapeHtml(token.expected)}</span>`;
           }
-        }
+          if (token.type === "missing") {
+            errorsCount++;
+            return `<span class="diff-token missing" title="Mot manquant">[manquant : ${escapeHtml(token.expected)}]</span>`;
+          }
+          if (token.type === "extra") {
+            errorsCount++;
+            return `<span class="diff-token extra" title="Mot en trop">${escapeHtml(token.user)} (en trop)</span>`;
+          }
+          errorsCount++;
+          const title = token.type === "accent" ? "Erreur d'accent ou de majuscule" : "Erreur orthographique";
+          return `<span class="diff-token error" title="${title}">${escapeHtml(token.expected)} (écrit : ${escapeHtml(token.user)})</span>`;
+        });
 
-        const score = Math.max(0, Math.round(20 * (correctCount / expectedWords.length)));
-        const pourcentage = Math.round((correctCount / expectedWords.length) * 100);
+        // Le score porte sur l'ensemble des mots produits : les mots en trop comptent.
+        const totalCompare = correctCount + errorsCount;
+        const score = totalCompare ? Math.max(0, Math.round(20 * (correctCount / totalCompare))) : 0;
+        const pourcentage = totalCompare ? Math.round((correctCount / totalCompare) * 100) : 0;
 
         let appreciation = "Des accords à retravailler, relisez attentivement les règles.";
         if (score === 20) appreciation = "Sans faute magistral ! Félicitations.";
@@ -1030,7 +1086,8 @@ document.addEventListener("DOMContentLoaded", () => {
           score,
           pourcentage,
           correctWords: correctCount,
-          totalWords: expectedWords.length,
+          // Inclut les mots en trop pour que le pourcentage affiché reste cohérent.
+          totalWords: totalCompare,
           errorsCount,
           appreciation,
           renderedHtml: renderedTokens.join(" ")
@@ -1094,6 +1151,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
+    const printGridBtn = document.getElementById("print-grid-btn");
+    if (printGridBtn) printGridBtn.addEventListener("click", () => window.print());
+
     // Ligne initiale
     if (tableBody && tableBody.children.length === 0) {
       addRow("Le printemps", "Sujet du verbe « a été »", "Nom commun", "Noyau du GN sujet");
@@ -1127,11 +1187,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const data = APP_DATA.memento;
 
+    // Recherche insensible aux accents et à la casse (« preposition » trouve « Préposition »)
+    const normalize = (value) => String(value).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const query = normalize(filter);
+    const matches = (value) => !query || normalize(value).includes(query);
+
     let html = `<div class="memento-grid">`;
 
     // Carte 1 : Les 5 classes variables
     const variablesFiltrees = data.classesGrammaticales.variables.filter(v =>
-      !filter || v.nom.toLowerCase().includes(filter) || v.definition.toLowerCase().includes(filter) || v.astuce.toLowerCase().includes(filter)
+      matches(v.nom) || matches(v.definition) || matches(v.astuce)
     );
 
     if (variablesFiltrees.length > 0) {
@@ -1154,7 +1219,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Carte 2 : Les classes invariables
     const invariablesFiltrees = data.classesGrammaticales.invariables.filter(v =>
-      !filter || v.nom.toLowerCase().includes(filter) || v.definition.toLowerCase().includes(filter) || v.astuce.toLowerCase().includes(filter)
+      matches(v.nom) || matches(v.definition) || matches(v.astuce)
     );
 
     if (invariablesFiltrees.length > 0) {
@@ -1177,7 +1242,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Carte 3 : Fonctions autour du verbe
     const verbeFonctions = data.fonctions.autourVerbe.filter(f =>
-      !filter || f.nom.toLowerCase().includes(filter) || f.role.toLowerCase().includes(filter) || f.exemple.toLowerCase().includes(filter)
+      matches(f.nom) || matches(f.role) || matches(f.exemple)
     );
 
     if (verbeFonctions.length > 0) {
@@ -1200,11 +1265,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Carte 4 : Fonctions autour du nom & Compléments circonstanciels
     const nomFonctions = data.fonctions.autourNom.filter(f =>
-      !filter || f.nom.toLowerCase().includes(filter) || f.role.toLowerCase().includes(filter)
+      matches(f.nom) || matches(f.role)
     );
 
     const ccFonctions = data.fonctions.circonstanciels.filter(f =>
-      !filter || f.nom.toLowerCase().includes(filter) || f.role.toLowerCase().includes(filter)
+      matches(f.nom) || matches(f.role)
     );
 
     if (nomFonctions.length > 0 || ccFonctions.length > 0) {
@@ -1234,7 +1299,7 @@ document.addEventListener("DOMContentLoaded", () => {
     html += `</div>`;
 
     if (variablesFiltrees.length === 0 && invariablesFiltrees.length === 0 && verbeFonctions.length === 0 && nomFonctions.length === 0 && ccFonctions.length === 0) {
-      html = `<div style="text-align:center; padding:3rem; color:var(--ink-muted);">Aucune règle ne correspond à « ${filter} ».</div>`;
+      html = `<div style="text-align:center; padding:3rem; color:var(--ink-muted);">Aucune règle ne correspond à « ${escapeHtml(filter)} ».</div>`;
     }
 
     container.innerHTML = html;
@@ -1273,7 +1338,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (idx === current.reponseCorrecte) optClass += " correct";
         else if (state.arts.selectedOption === idx) optClass += " wrong";
       }
-      html += `<button class="${optClass}" data-arts-opt="${idx}" ${state.arts.isValidated ? "disabled" : ""}>
+      html += `<button class="${optClass}" data-arts-opt="${idx}" aria-pressed="${state.arts.selectedOption === idx}" ${state.arts.isValidated ? "disabled" : ""}>
         <span>${opt}</span>
       </button>`;
     });
@@ -1283,7 +1348,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (state.arts.isValidated) {
       const isOk = state.arts.selectedOption === current.reponseCorrecte;
       html += `
-        <div class="feedback-box ${isOk ? 'success' : 'error'}">
+        <div class="feedback-box ${isOk ? 'success' : 'error'}" role="status">
           <h4>${isOk ? '✓ Exact !' : '✕ Erreur factuelle'}</h4>
           <div class="feedback-content">
             <p>${current.explication}</p>
@@ -1361,7 +1426,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const raw = localStorage.getItem("grammaire_app_stats");
       if (raw) {
         const parsed = JSON.parse(raw);
-        state.stats = Object.assign(state.stats, parsed);
+        if (parsed && typeof parsed === "object") {
+          state.stats = Object.assign(state.stats, parsed);
+        }
+        if (!state.stats.completedPhrases || typeof state.stats.completedPhrases !== "object") {
+          state.stats.completedPhrases = {};
+        }
+        ["scoreTotal", "tentatives", "streak"].forEach(key => {
+          if (!Number.isFinite(state.stats[key])) state.stats[key] = 0;
+        });
       }
     } catch (e) {
       console.warn("Impossible de charger les statistiques depuis localStorage", e);
@@ -1399,6 +1472,10 @@ document.addEventListener("DOMContentLoaded", () => {
           dicteeScore: 0,
           artsScore: 0
         };
+        // Les scores affichés dans chaque module doivent repartir de zéro eux aussi.
+        state.quiz.score = 0;
+        state.ortho.score = 0;
+        state.arts.score = 0;
         updateHeaderStats();
         renderDixPhrases();
         renderQuiz();

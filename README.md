@@ -47,6 +47,12 @@ python3 -m http.server 8123
 ```
 Puis ouvrez [http://localhost:8123](http://localhost:8123) dans votre navigateur.
 
+### Option 3 : Vérifier le moteur de correction des dictées
+Le diff mot à mot (alignement, omissions, accents, mots en trop) possède une auto-vérification :
+```bash
+node tests/diff.test.js
+```
+
 ---
 
 ## 🚀 Déploiement Continu via GitHub & Netlify (Recommandé)

@@ -227,7 +227,7 @@ const APP_DATA = {
       fonctionExacte: "Noyau du groupe nominal sujet du verbe « a été »",
       choixNature: ["Nom commun", "Adjectif qualificatif", "Verbe conjugué", "Adverbe"],
       choixFonction: [
-        "Noyau du GN sujet du verbe « a été »",
+        "Noyau du groupe nominal sujet du verbe « a été »",
         "Complément d'Objet Direct (COD)",
         "Attribut du sujet",
         "Complément Circonstanciel de temps"
@@ -246,7 +246,7 @@ const APP_DATA = {
       decoupagePropositions: "[Sous le ciel gris, les (fleurs) ont bien du mal à percer.]",
       typeProposition: "Proposition indépendante (1 verbe conjugué : « ont »)",
       natureExacte: "Nom commun",
-      fonctionExacte: "Sujet du verbe « ont » (Noyau du GN sujet « les fleurs »)",
+      fonctionExacte: "Sujet du verbe « ont »",
       choixNature: ["Nom commun", "Pronom personnel", "Adjectif qualificatif", "Participe présent"],
       choixFonction: [
         "Sujet du verbe « ont »",
@@ -363,7 +363,7 @@ const APP_DATA = {
       fonctionExacte: "Complément du nom « branches » (CDN)",
       choixNature: ["Groupe prépositionnel", "Groupe nominal sujet", "Complément Circonstanciel", "Adverbe"],
       choixFonction: [
-        "Complément du nom « branches »",
+        "Complément du nom « branches » (CDN)",
         "Complément Circonstanciel de lieu de « aperçois »",
         "Complément d'Objet Indirect de « aperçois »",
         "Épithète liée du nom « branches »"
@@ -474,7 +474,7 @@ const APP_DATA = {
       decoupagePropositions: "[La violoniste [dont nous écoutons le disque] joue avec une immense virtuosité.]",
       typeProposition: "Phrase complexe : Principale + Subordonnée relative enchâssée",
       natureExacte: "Pronom relatif",
-      fonctionExacte: "Complément du nom « disque » dans la subordonnée (nous écoutons le disque de qui ?)",
+      fonctionExacte: "Complément du nom « disque »",
       choixNature: ["Pronom relatif", "Conjonction de subordination", "Adverbe de lieu", "Pronom démonstratif"],
       choixFonction: [
         "Complément du nom « disque »",
@@ -496,7 +496,7 @@ const APP_DATA = {
       decoupagePropositions: "[Le professeur (leur) distribue les copies corrigées.]",
       typeProposition: "Proposition indépendante (1 verbe : « distribue »)",
       natureExacte: "Pronom personnel",
-      fonctionExacte: "Complément d'Objet Indirect (COI) / Second (COS) du verbe « distribue »",
+      fonctionExacte: "Complément d'Objet Indirect (COI) / Second (COS)",
       choixNature: ["Pronom personnel", "Déterminant possessif", "Pronom possessif", "Adverbe"],
       choixFonction: [
         "Complément d'Objet Indirect (COI) / Second (COS)",
@@ -545,7 +545,7 @@ const APP_DATA = {
       fonctionExacte: "Complément du nom « statuettes » (CDN)",
       choixNature: ["Groupe prépositionnel", "Complément Circonstanciel de manière", "Attribut du COD", "Proposition subordonnée"],
       choixFonction: [
-        "Complément du nom « statuettes »",
+        "Complément du nom « statuettes » (CDN)",
         "Complément Circonstanciel de manière de « ont découvert »",
         "Complément d'Objet Indirect",
         "Attribut du sujet"
@@ -685,16 +685,16 @@ const APP_DATA = {
       },
       etape3: {
         mots: [
-          { mot: "Entre", nature: "Préposition", fonctionInterne: "Introduit le groupe prépositionnel CC de lieu" },
-          { mot: "les", nature: "Déterminant (Article défini)", fonctionInterne: "Détermine le nom « branches »" },
-          { mot: "branches", nature: "Nom commun (féminin pluriel)", fonctionInterne: "Noyau du groupe nominal prépositionnel" },
-          { mot: "fleuries", nature: "Adjectif qualificatif", fonctionInterne: "Épithète liée du nom « branches »" },
-          { mot: "du", nature: "Déterminant (Article contracté = de + le)", fonctionInterne: "Introduit le complément du nom « cerisier »" },
-          { mot: "cerisier", nature: "Nom commun (masculin singulier)", fonctionInterne: "Complément du nom (CDN) de « branches »" },
-          { mot: "j’", nature: "Pronom personnel", fonctionInterne: "Sujet du verbe aperçois" },
-          { mot: "aperçois", nature: "Verbe conjugué (apercevoir)", fonctionInterne: "Noyau verbal de la proposition" },
-          { mot: "le", nature: "Déterminant (Article défini)", fonctionInterne: "Détermine le nom « fleuve »" },
-          { mot: "fleuve", nature: "Nom commun (masculin singulier)", fonctionInterne: "Noyau du groupe nominal COD" }
+          { mot: "Entre", bloc: "Entre les branches fleuries du cerisier", nature: "Préposition", fonctionInterne: "Introduit le groupe prépositionnel CC de lieu" },
+          { mot: "les", bloc: "Entre les branches fleuries du cerisier", nature: "Déterminant (Article défini)", fonctionInterne: "Détermine le nom « branches »" },
+          { mot: "branches", bloc: "Entre les branches fleuries du cerisier", nature: "Nom commun (féminin pluriel)", fonctionInterne: "Noyau du groupe nominal prépositionnel" },
+          { mot: "fleuries", bloc: "Entre les branches fleuries du cerisier", nature: "Adjectif qualificatif", fonctionInterne: "Épithète liée du nom « branches »" },
+          { mot: "du", bloc: "Entre les branches fleuries du cerisier", nature: "Déterminant (Article contracté = de + le)", fonctionInterne: "Introduit le complément du nom « cerisier »" },
+          { mot: "cerisier", bloc: "Entre les branches fleuries du cerisier", nature: "Nom commun (masculin singulier)", fonctionInterne: "Complément du nom (CDN) de « branches »" },
+          { mot: "j’", bloc: "j’", nature: "Pronom personnel", fonctionInterne: "Sujet du verbe aperçois" },
+          { mot: "aperçois", bloc: "aperçois", nature: "Verbe conjugué (apercevoir)", fonctionInterne: "Noyau verbal de la proposition" },
+          { mot: "le", bloc: "le fleuve", nature: "Déterminant (Article défini)", fonctionInterne: "Détermine le nom « fleuve »" },
+          { mot: "fleuve", bloc: "le fleuve", nature: "Nom commun (masculin singulier)", fonctionInterne: "Noyau du groupe nominal COD" }
         ]
       }
     },
@@ -734,16 +734,16 @@ const APP_DATA = {
       },
       etape3: {
         mots: [
-          { mot: "Je", nature: "Pronom personnel", fonctionInterne: "Sujet du verbe « pense »" },
-          { mot: "pense", nature: "Verbe conjugué (penser)", fonctionInterne: "Centre de la proposition principale" },
-          { mot: "à", nature: "Préposition", fonctionInterne: "Introduit le COI" },
-          { mot: "un", nature: "Déterminant (Article indéfini)", fonctionInterne: "Détermine le nom « être »" },
-          { mot: "être", nature: "Nom commun", fonctionInterne: "Noyau du groupe COI" },
-          { mot: "vague", nature: "Adjectif qualificatif", fonctionInterne: "Épithète liée du nom « être »" },
-          { mot: "qui", nature: "Pronom relatif", fonctionInterne: "Remplace l'antécédent « être » et sujet du verbe « aimera »" },
-          { mot: "aimera", nature: "Verbe conjugué (aimer)", fonctionInterne: "Centre de la proposition subordonnée" },
-          { mot: "ces", nature: "Déterminant démonstratif", fonctionInterne: "Détermine le nom « fleurs »" },
-          { mot: "fleurs", nature: "Nom commun", fonctionInterne: "Noyau du groupe nominal COD" }
+          { mot: "Je", bloc: "Je", nature: "Pronom personnel", fonctionInterne: "Sujet du verbe « pense »" },
+          { mot: "pense", bloc: "pense", nature: "Verbe conjugué (penser)", fonctionInterne: "Centre de la proposition principale" },
+          { mot: "à", bloc: "à un être vague", nature: "Préposition", fonctionInterne: "Introduit le COI" },
+          { mot: "un", bloc: "à un être vague", nature: "Déterminant (Article indéfini)", fonctionInterne: "Détermine le nom « être »" },
+          { mot: "être", bloc: "à un être vague", nature: "Nom commun", fonctionInterne: "Noyau du groupe COI" },
+          { mot: "vague", bloc: "à un être vague", nature: "Adjectif qualificatif", fonctionInterne: "Épithète liée du nom « être »" },
+          { mot: "qui", bloc: "qui", nature: "Pronom relatif", fonctionInterne: "Remplace l'antécédent « être » et sujet du verbe « aimera »" },
+          { mot: "aimera", bloc: "aimera", nature: "Verbe conjugué (aimer)", fonctionInterne: "Centre de la proposition subordonnée" },
+          { mot: "ces", bloc: "ces fleurs", nature: "Déterminant démonstratif", fonctionInterne: "Détermine le nom « fleurs »" },
+          { mot: "fleurs", bloc: "ces fleurs", nature: "Nom commun", fonctionInterne: "Noyau du groupe nominal COD" }
         ]
       }
     }
