@@ -1,5 +1,7 @@
 # Grammaire & Méthode — Plateforme Interactive d'Analyse Grammaticale, Dictées & Concours
 
+> **Site en ligne :** [https://grammaireplateforme.netlify.app/](https://grammaireplateforme.netlify.app/)
+
 Plateforme web statique moderne (HTML5, CSS3, JavaScript vanilla) conçue pour s'entraîner aux épreuves d'analyse grammaticale (**Nature** vs **Fonction**, découpage de propositions, accords délicats), pratiquer des **dictées audio interactives** et réviser les notions de culture générale (Connaissance des Arts).
 
 Les exercices et règles sont directement issus des polycopiés du dossier (`Nature_fct.pdf`, `fiche_nature_fonction.pdf`), des leçons de référence du site **Français Facile** (*francaisfacile.com*) et des fiches ICP Prépa Journalisme.
@@ -82,7 +84,7 @@ git push -u origin main
 2. Cliquez sur **« Add new site »** > **« Import an existing project »**.
 3. Sélectionnez **GitHub**, puis choisissez votre dépôt `plateforme-grammaire`.
 4. Netlify détecte automatiquement le fichier `netlify.toml` fourni à la racine. Cliquez directement sur **« Deploy site »** !
-5. Votre site est instantanément en ligne avec une URL sécurisée en HTTPS (du type `https://votre-site.netlify.app`). Vous pouvez changer ce nom dans *Site configuration > Change site name*.
+5. Votre site est instantanément en ligne avec son URL sécurisée : [https://grammaireplateforme.netlify.app/](https://grammaireplateforme.netlify.app/).
 
 ### Étape 4 : Mettre à jour le site à l'avenir
 Dès que vous modifiez un fichier ou ajoutez des exercices :
@@ -92,13 +94,3 @@ git commit -m "Mise à jour des exercices"
 git push
 ```
 👉 Netlify redéploie le site automatiquement en moins de 15 secondes !
-
----
-
-## 🌐 Déploiement alternatif sur Vercel
-
-Si vous préférez Vercel, la configuration [`vercel.json`](vercel.json) et [`.vercelignore`](.vercelignore) est également incluse :
-```bash
-npm install -g vercel
-vercel
-```
