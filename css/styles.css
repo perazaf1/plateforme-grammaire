@@ -989,6 +989,59 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   gap: 1rem;
 }
 
+/* Filtre de cours — Quiz Connaissance des Arts (ICP) */
+.arts-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+  padding: 0.9rem 1.25rem;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-subtle);
+  flex-wrap: wrap;
+}
+
+.arts-filter-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--accent-navy);
+  white-space: nowrap;
+}
+
+.arts-select-wrapper {
+  flex: 1;
+  min-width: 250px;
+}
+
+.arts-course-select {
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--ink-primary);
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.arts-course-select:hover {
+  border-color: var(--accent-navy);
+  background-color: #ffffff;
+}
+
+.arts-course-select:focus-visible {
+  outline: 2px solid var(--accent-navy);
+  outline-offset: 2px;
+  background-color: #ffffff;
+}
+
 /* Optimisation pour l'impression de la grille d'examen */
 @media print {
   .site-header, .nav-tabs-wrapper, .action-toolbar, .site-footer, .stepper-nav, .grid-builder-tools {

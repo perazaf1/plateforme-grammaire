@@ -69,6 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     // État Arts
     arts: {
+      selectedCourse: "all",
       currentIndex: 0,
       selectedOption: null,
       isValidated: false,
@@ -1308,7 +1309,27 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==========================================
   // MODULE 7 : BONUS CONNAISSANCE DES ARTS (ICP)
   // ==========================================
+  function getFilteredArtsQuestions() {
+    const list = APP_DATA.artsCulture || [];
+    if (!state.arts.selectedCourse || state.arts.selectedCourse === "all") {
+      return list;
+    }
+    const cNum = parseInt(state.arts.selectedCourse, 10);
+    return list.filter(item => item.coursNum === cNum);
+  }
+
   function initArtsModule() {
+    const courseSelect = document.getElementById("arts-course-select");
+    if (courseSelect) {
+      courseSelect.value = state.arts.selectedCourse || "all";
+      courseSelect.addEventListener("change", (e) => {
+        state.arts.selectedCourse = e.target.value;
+        state.arts.currentIndex = 0;
+        state.arts.selectedOption = null;
+        state.arts.isValidated = false;
+        renderArts();
+      });
+    }
     renderArts();
   }
 
@@ -1316,17 +1337,48 @@ document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById("arts-container");
     if (!container) return;
 
-    const list = APP_DATA.artsCulture;
-    const current = list[state.arts.currentIndex];
+    const courseSelect = document.getElementById("arts-course-select");
+    if (courseSelect && courseSelect.value !== state.arts.selectedCourse) {
+      courseSelect.value = state.arts.selectedCourse;
+    }
+
+    const list = getFilteredArtsQuestions();
     const total = list.length;
+
+    if (total === 0) {
+      container.innerHTML = `
+        <div style="text-align:center; padding:3rem 1.5rem; color:var(--ink-muted);">
+          <p style="font-size:1.05rem; margin-bottom:1rem;">Aucune question disponible pour cette sélection.</p>
+          <button class="btn-primary" id="arts-empty-reset-btn">Afficher tous les cours</button>
+        </div>
+      `;
+      const resetBtn = container.querySelector("#arts-empty-reset-btn");
+      if (resetBtn) {
+        resetBtn.addEventListener("click", () => {
+          state.arts.selectedCourse = "all";
+          if (courseSelect) courseSelect.value = "all";
+          state.arts.currentIndex = 0;
+          state.arts.selectedOption = null;
+          state.arts.isValidated = false;
+          renderArts();
+        });
+      }
+      return;
+    }
+
+    if (state.arts.currentIndex >= total) {
+      state.arts.currentIndex = 0;
+    }
+
+    const current = list[state.arts.currentIndex];
 
     let html = `
       <div class="card-header-row">
-        <span class="badge-tag">${current.cours} • Question ${state.arts.currentIndex + 1} / ${total}</span>
+        <span class="badge-tag">${escapeHtml(current.cours)} • Question ${state.arts.currentIndex + 1} / ${total}</span>
         <div class="progress-indicator">Score Arts : ${state.arts.score} pt(s)</div>
       </div>
       <h3 style="font-size:1.25rem; margin-bottom:1.25rem; color:var(--ink-primary);">
-        ${current.question}
+        ${escapeHtml(current.question)}
       </h3>
       <div class="options-stack" style="margin-bottom:1.5rem;">
     `;
@@ -1339,7 +1391,7 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (state.arts.selectedOption === idx) optClass += " wrong";
       }
       html += `<button class="${optClass}" data-arts-opt="${idx}" aria-pressed="${state.arts.selectedOption === idx}" ${state.arts.isValidated ? "disabled" : ""}>
-        <span>${opt}</span>
+        <span>${escapeHtml(opt)}</span>
       </button>`;
     });
 
@@ -1351,10 +1403,18 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="feedback-box ${isOk ? 'success' : 'error'}" role="status">
           <h4>${isOk ? '✓ Exact !' : '✕ Erreur factuelle'}</h4>
           <div class="feedback-content">
-            <p>${current.explication}</p>
+            <p>${escapeHtml(current.explication)}</p>
           </div>
         </div>
       `;
+    }
+
+    const isLast = state.arts.currentIndex >= total - 1;
+    let nextBtnLabel = "Question suivante →";
+    if (isLast) {
+      nextBtnLabel = state.arts.selectedCourse === "all"
+        ? "Recommencer le quiz Arts (tous les cours)"
+        : `Recommencer le Cours ${state.arts.selectedCourse}`;
     }
 
     html += `
@@ -1367,7 +1427,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </button>
           ` : `
             <button class="btn-primary" id="arts-next-btn">
-              ${state.arts.currentIndex < total - 1 ? 'Question suivante →' : 'Recommencer le quiz Arts'}
+              ${escapeHtml(nextBtnLabel)}
             </button>
           `}
         </div>
@@ -1476,6 +1536,12 @@ document.addEventListener("DOMContentLoaded", () => {
         state.quiz.score = 0;
         state.ortho.score = 0;
         state.arts.score = 0;
+        state.arts.selectedCourse = "all";
+        state.arts.currentIndex = 0;
+        state.arts.selectedOption = null;
+        state.arts.isValidated = false;
+        const artsSelect = document.getElementById("arts-course-select");
+        if (artsSelect) artsSelect.value = "all";
         updateHeaderStats();
         renderDixPhrases();
         renderQuiz();

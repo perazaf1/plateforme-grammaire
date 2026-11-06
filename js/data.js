@@ -1076,8 +1076,10 @@ const APP_DATA = {
 
   // 7. BONUS : CONNAISSANCE DES ARTS (Cours 1 à 5 ICP Journalisme)
   artsCulture: [
+    // --- COURS 1 : Conscience patrimoniale et protection des biens ---
     {
       id: "art1",
+      coursNum: 1,
       cours: "Cours 1 : Conscience patrimoniale et protection des biens",
       question: "En quelle année l'abbé Grégoire forge-t-il le terme de « vandalisme » pour dénoncer les destructions du patrimoine révolutionnaire ?",
       options: ["1794", "1789", "1804", "1830"],
@@ -1086,90 +1088,317 @@ const APP_DATA = {
     },
     {
       id: "art2",
+      coursNum: 1,
       cours: "Cours 1 : Conscience patrimoniale et protection des biens",
       question: "Quelle grande convention internationale de l'UNESCO fonde en 1972 la notion de « Valeur Universelle Exceptionnelle » (VUE) ?",
       options: [
-        "La Convention pour la protection du patrimoine mondial, culturel et naturel (Paris, 1972)",
         "La Convention de La Haye (1954)",
+        "La Convention pour la protection du patrimoine mondial, culturel et naturel (Paris, 1972)",
         "La Convention d'UNIDROIT (1995)",
         "Le Traité de Rome (1957)"
       ],
-      reponseCorrecte: 0,
+      reponseCorrecte: 1,
       explication: "Adoptée en 1972 par l'UNESCO, cette convention établit la Liste du patrimoine mondial et exige que les sites possèdent une « valeur universelle exceptionnelle » pour être inscrits."
     },
     {
       id: "art3",
+      coursNum: 1,
       cours: "Cours 1 : Conscience patrimoniale et protection des biens",
       question: "Quel symbole officiel, issu de la Convention de La Haye de 1954, protège les biens culturels en cas de conflit armé ?",
-      options: ["Le Bouclier bleu", "La Croix rouge", "Le Casque blanc", "L'Étoile d'or"],
-      reponseCorrecte: 0,
+      options: ["La Croix rouge", "Le Bouclier bleu", "Le Casque blanc", "L'Étoile d'or"],
+      reponseCorrecte: 1,
       explication: "Le Bouclier bleu est le signe distinctif prévu par la Convention de La Haye (1954) pour marquer les monuments protégés lors des guerres."
     },
     {
       id: "art4",
+      coursNum: 1,
       cours: "Cours 1 : Conscience patrimoniale et protection des biens",
       question: "Quel jugement historique de la CPI (2016) a condamné pour la première fois la destruction de mausolées (Tombouctou) comme crime de guerre ?",
       options: [
-        "L'arrêt Ahmad Al Faqi Al-Mahdi",
         "L'arrêt Klaus Barbie",
         "L'arrêt Radovan Karadžić",
+        "L'arrêt Ahmad Al Faqi Al-Mahdi",
         "L'arrêt Nuremberg II"
       ],
-      reponseCorrecte: 0,
+      reponseCorrecte: 2,
       explication: "En 2016, la Cour Pénale Internationale condamne Ahmad Al Faqi Al-Mahdi à 9 ans de prison pour avoir intentionnellement dirigé des attaques contre les mausolées classés UNESCO de Tombouctou."
     },
     {
+      id: "art5_c1",
+      coursNum: 1,
+      cours: "Cours 1 : Conscience patrimoniale et protection des biens",
+      question: "Quelle grande opération internationale de l'UNESCO menée en 1964 en Égypte est considérée comme l'acte fondateur de la sauvegarde du patrimoine mondial ?",
+      options: [
+        "La reconstruction du phare d'Alexandrie",
+        "Le sauvetage et le déplacement des temples d'Abou Simbel",
+        "La restauration intégrale des pyramides de Gizeh",
+        "Le déblaiement du complexe funéraire de Louxor"
+      ],
+      reponseCorrecte: 1,
+      explication: "En 1964, face à la montée des eaux causée par le barrage d'Assouan, l'UNESCO mobilise 50 pays pour découper et déplacer les temples d'Abou Simbel, préfigurant la Convention de 1972."
+    },
+
+    // --- COURS 2 : Histoire et enjeux actuels du musée ---
+    {
       id: "art5",
+      coursNum: 2,
       cours: "Cours 2 : Histoire et enjeux actuels du musée",
       question: "Que désignait étymologiquement le terme grec « Mouseion » dans l'Antiquité ?",
       options: [
-        "Un sanctuaire ou bois sacré consacré aux Muses, souvent à vocation commémorative ou funéraire",
         "Une galerie marchande réservée aux sculpteurs",
+        "Un sanctuaire ou bois sacré consacré aux Muses, souvent à vocation commémorative ou funéraire",
         "Un bâtiment réservé aux archives de la cité",
         "Une académie militaire athénienne"
       ],
-      reponseCorrecte: 0,
+      reponseCorrecte: 1,
       explication: "À l'origine, le Mouseion est un lieu sacré dédié aux 9 Muses. Le plus célèbre, celui d'Alexandrie (IIIe siècle av. J.-C.), comprenait la grande bibliothèque."
     },
     {
       id: "art6",
+      coursNum: 2,
       cours: "Cours 2 : Histoire et enjeux actuels du musée",
       question: "En quelle année le Muséum central des arts de la République (futur Musée du Louvre) a-t-il ouvert ses portes au public ?",
-      options: ["1793 (10 août)", "1789 (14 juillet)", "1804 (2 décembre)", "1848 (24 février)"],
-      reponseCorrecte: 0,
+      options: ["1789 (14 juillet)", "1793 (10 août)", "1804 (2 décembre)", "1848 (24 février)"],
+      reponseCorrecte: 1,
       explication: "Le Louvre ouvre officiellement au public le 10 août 1793, marquant la naissance du musée moderne public et éducatif issu des Lumières et de la Révolution."
     },
     {
       id: "art7",
+      coursNum: 2,
       cours: "Cours 2 : Histoire et enjeux actuels du musée",
       question: "Qui a créé à Borgo Vico entre 1537 et 1543 l'un des premiers « Musaeum » de la Renaissance doté de cartels explicatifs ?",
-      options: ["Paolo Giovio", "Laurent de Médicis", "Giorgio Vasari", "Pic de la Mirandole"],
-      reponseCorrecte: 0,
+      options: ["Laurent de Médicis", "Giorgio Vasari", "Paolo Giovio", "Pic de la Mirandole"],
+      reponseCorrecte: 2,
       explication: "L'humaniste et évêque Paolo Giovio rassemble plus de 400 portraits d'hommes illustres avec des inscriptions (cartels) dans sa villa de Borgo Vico près de Côme."
     },
     {
+      id: "art8_c2",
+      coursNum: 2,
+      cours: "Cours 2 : Histoire et enjeux actuels du musée",
+      question: "Quel est le plus ancien trésor ecclésial médiéval conservé en France, célèbre pour sa statue-reliquaire du Xe-XIe siècle en bois d'if recouvert d'or et de gemmes ?",
+      options: [
+        "Le trésor de Sainte-Foy de Conques",
+        "Le trésor royal de Saint-Denis",
+        "Le trésor de Notre-Dame de Chartres",
+        "Le trésor de l'abbaye de Cluny"
+      ],
+      reponseCorrecte: 0,
+      explication: "Le trésor de Sainte-Foy de Conques conserve la célèbre statue-reliquaire (Xe–XIe s.) protégée par la sacralité des reliques, illustrant la conservation religieuse médiévale précédant les musées modernes."
+    },
+    {
+      id: "art9_c2",
+      coursNum: 2,
+      cours: "Cours 2 : Histoire et enjeux actuels du musée",
+      question: "Quel établissement britannique, inauguré en 1683 à Oxford pour abriter les collections données par Elias Ashmole, est considéré comme le premier musée universitaire public moderne ?",
+      options: [
+        "Le British Museum",
+        "La Dulwich Picture Gallery",
+        "L'Ashmolean Museum",
+        "Le Fitzwilliam Museum"
+      ],
+      reponseCorrecte: 2,
+      explication: "Inauguré le 21 mai 1683 à l'université d'Oxford, l'Ashmolean Museum est le premier musée public fondé par une institution pour accueillir des collections d'histoire naturelle et d'art."
+    },
+
+    // --- COURS 3 : La culture populaire dans les musées ---
+    {
       id: "art8",
+      coursNum: 3,
       cours: "Cours 3 : La culture populaire dans les musées",
       question: "Quel théoricien britannique des Cultural Studies a défendu l'idée que « culture is ordinary » et analysé la culture ouvrière dans les années 1950 ?",
-      options: ["Raymond Williams (et Richard Hoggart)", "Pierre Bourdieu", "Michel Foucault", "Theodor Adorno"],
-      reponseCorrecte: 0,
+      options: ["Pierre Bourdieu", "Raymond Williams (et Richard Hoggart)", "Michel Foucault", "Theodor Adorno"],
+      reponseCorrecte: 1,
       explication: "L'école de Birmingham (Richard Hoggart, Raymond Williams, Stuart Hall) a réhabilité l'étude de la culture populaire comme digne d'intérêt scientifique et muséal."
     },
     {
+      id: "art11_c3",
+      coursNum: 3,
+      cours: "Cours 3 : La culture populaire dans les musées",
+      question: "Qui est considéré par les historiens comme le véritable « père de la bande dessinée moderne » grâce à ses histoires en images créées dès 1827 et publiées dès 1833 ?",
+      options: [
+        "Richard Felton Outcault",
+        "Rodolphe Töpffer",
+        "Wilhelm Busch",
+        "Honoré Daumier"
+      ],
+      reponseCorrecte: 1,
+      explication: "Le pédagogue et dessinateur suisse Rodolphe Töpffer crée dès 1827 et publie 7 albums dès 1833, fondant la bande dessinée comme un média narratif autonome qu'il qualifiait d'art de « nature mixte »."
+    },
+    {
+      id: "art12_c3",
+      coursNum: 3,
+      cours: "Cours 3 : La culture populaire dans les musées",
+      question: "En 1964, qui a pour la première fois qualifié la bande dessinée de « neuvième art » dans une série d'articles de critique cinématographique et littéraire ?",
+      options: [
+        "Francis Lacassin",
+        "René Goscinny",
+        "André Malraux",
+        "Claude Beylie (formule popularisée ensuite par Morris)"
+      ],
+      reponseCorrecte: 3,
+      explication: "Claude Beylie emploie l'expression « neuvième art » en 1964 dans la revue Lettres et Médecins, consacrant la bande dessinée à l'égal du cinéma (7e art) et de la télévision (8e art)."
+    },
+    {
+      id: "art13_c3",
+      coursNum: 3,
+      cours: "Cours 3 : La culture populaire dans les musées",
+      question: "Quel roman graphique emblématique d'Art Spiegelman, relatant la Shoah sous forme de fable animale, a fait l'objet d'une exposition au MoMA en 1991-1992 et reçu un Prix Pulitzer spécial en 1992 ?",
+      options: [
+        "Persepolis",
+        "Maus",
+        "Watchmen",
+        "L'Arabe du futur"
+      ],
+      reponseCorrecte: 1,
+      explication: "Maus d'Art Spiegelman a marqué l'entrée décisive de la bande dessinée dans les grands musées d'art moderne (MoMA 1991-1992) et a obtenu un Prix Pulitzer en 1992."
+    },
+    {
+      id: "art14_c3",
+      coursNum: 3,
+      cours: "Cours 3 : La culture populaire dans les musées",
+      question: "Quelle caractéristique formelle fondamentale est aujourd'hui retenue par les spécialistes pour définir la bande dessinée (au lieu de la simple présence de bulles de texte) ?",
+      options: [
+        "La séquentialité (succession ordonnée d'au moins deux images reliées narrativement)",
+        "L'obligation de phylactères ou bulles de dialogue",
+        "Le format de publication sous forme de comic strip de presse",
+        "Le dessin satirique ou caricatural obligatoire"
+      ],
+      reponseCorrecte: 0,
+      explication: "La bande dessinée se définit par la séquentialité visuelle (la succession d'images dans le temps et l'espace). Des chefs-d'œuvre sans texte ni bulles restent d'authentiques bandes dessinées."
+    },
+
+    // --- COURS 4 : Art et écologie ---
+    {
       id: "art9",
+      coursNum: 4,
       cours: "Cours 4 : Art et écologie",
       question: "Quel mouvement artistique apparu à la fin des années 1960 aux États-Unis intervient directement dans le paysage naturel (Robert Smithson, Michael Heizer) ?",
-      options: ["Le Land Art", "Le Pop Art", "Le Futurisme", "Le Suprématisme"],
-      reponseCorrecte: 0,
+      options: ["Le Pop Art", "Le Futurisme", "Le Land Art", "Le Suprématisme"],
+      reponseCorrecte: 2,
       explication: "Le Land Art utilise le cadre et les matériaux de la nature (terre, roche, sel) pour créer des œuvres monumentales in situ, à l'image de Spiral Jetty (1970) de Smithson."
     },
     {
+      id: "art15_c4",
+      coursNum: 4,
+      cours: "Cours 4 : Art et écologie",
+      question: "En 1982, quelle artiste a semé et récolté un champ de blé de deux hectares sur une décharge face aux tours de Wall Street à New York (Wheatfield – A Confrontation) ?",
+      options: [
+        "Nancy Holt",
+        "Agnes Denes",
+        "Judy Chicago",
+        "Maya Lin"
+      ],
+      reponseCorrecte: 1,
+      explication: "Dans Wheatfield – A Confrontation (1982), Agnes Denes sème 2 hectares de blé à Manhattan pour récolter 450 kg de céréales et dénoncer la spéculation financière sur la nourriture et la destruction écologique."
+    },
+    {
+      id: "art16_c4",
+      coursNum: 4,
+      cours: "Cours 4 : Art et écologie",
+      question: "En décembre 2015 à Paris lors de la COP21, quelle installation de l'artiste Olafur Eliasson a disposé des blocs de banquise du Groenland sur la place du Panthéon ?",
+      options: [
+        "Ice Watch",
+        "The Weather Project",
+        "Green River",
+        "Melting Landscape"
+      ],
+      reponseCorrecte: 0,
+      explication: "Pour Ice Watch (2014-2018), Olafur Eliasson et le géologue Minik Rosing ont importé des blocs de glace flottante groenlandaise afin de rendre tangible la fonte de la cryosphère aux yeux des citoyens et décideurs."
+    },
+    {
+      id: "art17_c4",
+      coursNum: 4,
+      cours: "Cours 4 : Art et écologie",
+      question: "Quel ouvrage fondateur de la biologiste Rachel Carson, paru en 1962, a révélé au monde l'empoisonnement écologique par les pesticides (DDT) et impulsé l'écologie contemporaine ?",
+      options: [
+        "Notre avenir à tous (Rapport Brundtland)",
+        "Les Limites à la croissance (Rapport Meadows)",
+        "Printemps silencieux (Silent Spring)",
+        "La Terre outragée"
+      ],
+      reponseCorrecte: 2,
+      explication: "Printemps silencieux (1962) de Rachel Carson a sonné l'alarme contre l'usage massif des pesticides de synthèse, impulsant la création des premières agences environnementales et la conférence de Stockholm en 1972."
+    },
+    {
+      id: "art18_c4",
+      coursNum: 4,
+      cours: "Cours 4 : Art et écologie",
+      question: "Quel photographe de l'expédition géologique Hayden (1871) a fourni les images décisives qui ont convaincu le Congrès américain de fonder le premier parc national de l'histoire (Yellowstone, 1872) ?",
+      options: [
+        "Ansel Adams",
+        "Timothy O'Sullivan",
+        "Carleton Watkins",
+        "William Henry Jackson"
+      ],
+      reponseCorrecte: 3,
+      explication: "Les photographies de William Henry Jackson prises en 1871-1872 ont joué un rôle politique majeur pour préserver les geysers et canyons de Yellowstone de la prédation industrielle privée."
+    },
+
+    // --- COURS 5 : Art, pouvoir et contestations ---
+    {
       id: "art10",
+      coursNum: 5,
       cours: "Cours 5 : Art, pouvoir et contestations",
       question: "En quelle année l'exposition de propagande nazie sur « l'art dégénéré » (Entartete Kunst) a-t-elle été organisée à Munich ?",
-      options: ["1937", "1933", "1939", "1941"],
-      reponseCorrecte: 0,
+      options: ["1933", "1937", "1939", "1941"],
+      reponseCorrecte: 1,
       explication: "Organisée en 1937 par le régime nazi à Munich, cette exposition visait à diffamer l'art moderne (expressionnisme, cubisme, surréalisme, abstraction) en le qualifiant de pathologique et dégénéré."
+    },
+    {
+      id: "art19_c5",
+      coursNum: 5,
+      cours: "Cours 5 : Art, pouvoir et contestations",
+      question: "Le 10 mars 1914, quelle suffragette britannique a tailladé au hachoir la toile de Diego Vélasquez « La Vénus à son miroir » à la National Gallery de Londres ?",
+      options: [
+        "Mary Richardson",
+        "Emmeline Pankhurst",
+        "Emily Davison",
+        "Millicent Fawcett"
+      ],
+      reponseCorrecte: 0,
+      explication: "Mary Richardson a lacéré le tableau de Vélasquez pour protester contre l'incarcération et les tortures (gavage forcé) subies par Emmeline Pankhurst, déclarant tenir « davantage à la justice qu'à l'art »."
+    },
+    {
+      id: "art20_c5",
+      coursNum: 5,
+      cours: "Cours 5 : Art, pouvoir et contestations",
+      question: "Durant la guerre froide, quel courant pictural américain a été secrètement soutenu et financé par la CIA via le Congrès pour la liberté de la culture comme arme de soft-power ?",
+      options: [
+        "Le Pop Art",
+        "L'Expressionnisme abstrait (Pollock, de Kooning, Rothko)",
+        "Le Précisionnisme",
+        "Le Réalisme social"
+      ],
+      reponseCorrecte: 1,
+      explication: "La CIA et des critiques d'art comme Clement Greenberg ont fait de l'Expressionnisme abstrait l'étendard de l'individualisme et de la liberté occidentale face au réalisme socialiste soviétique."
+    },
+    {
+      id: "art21_c5",
+      coursNum: 5,
+      cours: "Cours 5 : Art, pouvoir et contestations",
+      question: "Quel essai pionnier de Linda Nochlin, publié en 1971 dans Artnews, est considéré comme le texte fondateur de l'histoire de l'art féministe ?",
+      options: [
+        "« The Dinner Party and Feminist Art »",
+        "« Ways of Seeing »",
+        "« Why Have There Been No Great Women Artists? »",
+        "« Old Mistresses: Women, Art and Ideology »"
+      ],
+      reponseCorrecte: 2,
+      explication: "Dans « Why Have There Been No Great Women Artists? » (1971), Linda Nochlin démontre que l'absence des femmes dans l'histoire canonique de l'art résulte d'interdits institutionnels et sociaux et non d'une absence de génie."
+    },
+    {
+      id: "art22_c5",
+      coursNum: 5,
+      cours: "Cours 5 : Art, pouvoir et contestations",
+      question: "Quel musée précurseur entièrement consacré à l'art urbain et au street-art a ouvert ses portes à Berlin en 2017, illustrant le dilemme de faire entrer la rue dans l'institution muséale ?",
+      options: [
+        "Street Art Passage Vienna",
+        "Urban Nation Museum for Urban Contemporary Art",
+        "Museum of Urban and Contemporary Art (MUCA)",
+        "The Wynwood Walls Museum"
+      ],
+      reponseCorrecte: 1,
+      explication: "Inauguré en 2017 à Berlin, Urban Nation pose le paradoxe de muséifier et pérenniser des formes d'art urbain dont l'essence est originellement illégale, éphémère et contestataire."
     }
   ]
 };
