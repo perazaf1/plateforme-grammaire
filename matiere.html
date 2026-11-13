@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matière : Atelier d'Entraînement</title>
+  <meta name="description" content="Sous-sections, quiz en rappel actif, flashcards et fiches de révision.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>§</text></svg>">
+  <link rel="preload" href="assets/fonts/bricolage-grotesque-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/plus-jakarta-sans-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/active-recall.css">
+  <link rel="stylesheet" href="css/grammaire.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-container">
+      <a href="index.html" class="brand" aria-label="Retour au catalogue des matières">
+        <span class="brand-icon" aria-hidden="true">§</span>
+        <span class="brand-text">
+          <h1>Atelier d'Entraînement</h1>
+          <p>Révision par matières et sous-sections</p>
+        </span>
+      </a>
+
+      <div class="header-stats">
+        <div id="stat-streak-chip" class="stat-chip streak" title="Série de bonnes réponses consécutives">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.66 11.2C17.43 10.9 17.15 10.64 16.89 10.38C16.22 9.78 15.46 9.35 14.82 8.72C13.33 7.26 13 4.85 13.95 3C13 3.23 12.17 3.75 11.46 4.32C8.87 6.4 7.85 10.07 9.07 13.22C9.11 13.32 9.15 13.42 9.15 13.55C9.15 13.77 9 13.97 8.8 14.05C8.57 14.15 8.33 14.09 8.14 13.93C8.08 13.88 8.04 13.83 8 13.76C6.87 12.33 6.69 10.28 7.45 8.64C5.78 10 4.87 12.3 5.03 14.47C5.21 16.78 6.64 18.89 8.77 19.85C11.08 20.9 13.91 20.62 15.93 19.14C18.14 17.5 19.09 14.61 18.31 11.96C18.15 11.66 17.93 11.41 17.66 11.2Z"/></svg>
+          <span>Série <strong id="stat-streak">0</strong></span>
+        </div>
+        <div class="stat-chip" title="Score total accumulé">
+          <span id="stat-score-total">0 XP</span>
+        </div>
+        <button type="button" id="reset-all-stats" class="btn-secondary btn-compact" title="Remettre les compteurs à zéro">
+          Réinitialiser
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="subject-banner">
+    <div class="subject-banner-inner">
+      <nav class="breadcrumb-nav" aria-label="Fil d'Ariane">
+        <a href="index.html" class="breadcrumb-link">Matières</a>
+        <span class="breadcrumb-sep" aria-hidden="true">/</span>
+        <button type="button" id="breadcrumb-subject" class="breadcrumb-link">Matière</button>
+        <span id="breadcrumb-subsection-wrap" hidden>
+          <span class="breadcrumb-sep" aria-hidden="true">/</span>
+          <span id="breadcrumb-subsection">Sous-section</span>
+        </span>
+      </nav>
+
+      <div class="subject-banner-main">
+        <div class="subject-banner-title-wrap">
+          <span id="workspace-subject-icon" class="subject-banner-icon" aria-hidden="true">📘</span>
+          <div>
+            <div class="subject-banner-title-row">
+              <h2 id="workspace-subject-title">Chargement...</h2>
+              <span id="workspace-subject-badge" class="badge-tag">Domaine</span>
+            </div>
+            <p id="workspace-subject-subtitle"></p>
+          </div>
+        </div>
+        <div id="workspace-subject-score" class="stat-chip">0 XP dans cette matière</div>
+      </div>
+    </div>
+  </section>
+
+  <div id="subject-loading" class="main-content">
+    <div class="exercise-card empty-state-card">
+      <p>Chargement de la matière en cours...</p>
+    </div>
+  </div>
+
+  <div id="subject-workspace" class="workspace-shell" hidden>
+    <aside class="subsections-rail-wrap" aria-label="Sous-sections de la matière">
+      <div class="rail-heading">Sous-sections</div>
+      <div id="subsections-rail" class="subsections-rail"></div>
+    </aside>
+
+    <main class="workspace-main">
+      <!-- Vue 1 : Menu des sous-sections -->
+      <section id="subsections-hub-view" hidden>
+        <div class="hub-header">
+          <h3>Choisissez une sous-section</h3>
+          <p>Chaque sous-section regroupe ses propres exercices en rappel actif, flashcards et fiches de synthèse.</p>
+        </div>
+        <div id="subsections-hub-grid" class="subsections-hub-grid"></div>
+      </section>
+
+      <!-- Vue 2 : Espace actif d'une sous-section -->
+      <section id="active-subsection-view" hidden>
+        <div class="active-subsection-bar">
+          <div class="active-subsection-bar-left">
+            <button type="button" id="back-to-hub-btn" class="btn-secondary btn-compact">← Sous-sections</button>
+            <h2 id="active-subsection-title">Sous-section</h2>
+          </div>
+          <span id="active-subsection-progress" class="mono-counter" hidden></span>
+        </div>
+
+        <nav class="nav-tabs-wrapper" aria-label="Modes d'entraînement">
+          <ul id="module-tabs" class="nav-tabs" role="tablist"></ul>
+        </nav>
+
+        <div id="module-intro"></div>
+        <section id="module-container" role="tabpanel"></section>
+      </section>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <p>made by @perazaf1 2026</p>
+    </div>
+  </footer>
+
+  <script src="js/core/catalog.js"></script>
+  <script src="js/core/registry.js"></script>
+  <script src="js/core/state.js"></script>
+  <script src="js/core/loader.js"></script>
+  <script src="js/engines/quiz-engine.js"></script>
+  <script src="js/engines/flashcards-engine.js"></script>
+  <script src="js/engines/reperes-engine.js"></script>
+  <script src="js/ui/header.js"></script>
+  <script src="js/ui/subject-page.js"></script>
+</body>
+</html>

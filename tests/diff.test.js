@@ -3,7 +3,7 @@
  * Exécution : node tests/diff.test.js
  */
 const assert = require("node:assert/strict");
-require("../js/diff.js");
+require("../js/engines/diff.js");
 
 const { diffWords } = globalThis.GrammarDiff;
 

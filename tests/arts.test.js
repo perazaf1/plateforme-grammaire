@@ -1,21 +1,37 @@
 /**
- * Auto-vérification du module Arts & Culture (ICP)
+ * Auto-vérification du module Connaissance des Arts (ICP) — architecture modulaire
  * Exécution : node tests/arts.test.js
  */
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
+const path = require("node:path");
 const vm = require("node:vm");
 
-// Charger data.js dans un contexte isolé
-const dataCode = fs.readFileSync("js/data.js", "utf8");
-const APP_DATA = vm.runInNewContext(dataCode + "; APP_DATA;");
-assert.ok(APP_DATA, "APP_DATA doit être défini");
-assert.ok(Array.isArray(APP_DATA.artsCulture), "APP_DATA.artsCulture doit être un tableau");
+const rootDir = path.resolve(__dirname, "..");
+const context = vm.createContext({ console });
 
-const questions = APP_DATA.artsCulture;
+const scripts = [
+  "js/core/registry.js",
+  "js/subjects/connaissance-arts/cours-1.js",
+  "js/subjects/connaissance-arts/cours-2.js",
+  "js/subjects/connaissance-arts/cours-3.js",
+  "js/subjects/connaissance-arts/cours-4.js",
+  "js/subjects/connaissance-arts/cours-5.js",
+  "js/subjects/connaissance-arts/index.js"
+];
+
+scripts.forEach((rel) => {
+  vm.runInContext(fs.readFileSync(path.join(rootDir, rel), "utf8"), context, { filename: rel });
+});
+
+const artsSubject = context.PlatformRegistry.getSubject("connaissance-arts");
+assert.ok(artsSubject, "La matière connaissance-arts doit être enregistrée");
+assert.ok(artsSubject.data && Array.isArray(artsSubject.data.quizQuestions), "quizQuestions doit être un tableau");
+assert.equal(artsSubject.subsections.length, 6, "Doit contenir 6 sous-sections (global + cours 1 à 5)");
+
+const questions = artsSubject.data.quizQuestions;
 assert.equal(questions.length, 25, "Il doit y avoir exactement 25 questions Arts (5 par cours)");
 
-// Vérifier l'unicité des IDs
 const ids = new Set();
 const courseCounts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
 
@@ -42,23 +58,24 @@ questions.forEach((q, idx) => {
   assert.ok(q.explication && q.explication.trim().length > 15, `Question ${q.id} : explication trop courte ou absente`);
 });
 
-// Vérifier que chaque cours a exactement 5 questions
 for (let c = 1; c <= 5; c++) {
   assert.equal(courseCounts[c], 5, `Cours ${c} doit avoir exactement 5 questions (actuel: ${courseCounts[c]})`);
+  const sub = context.PlatformRegistry.getSubsection(artsSubject, `cours-${c}`);
+  assert.ok(sub, `Sous-section cours-${c} présente`);
+  assert.equal(sub.modules.length, 3, `cours-${c} doit exposer quiz, flashcards et repères`);
 }
 
-// Vérifier la logique de filtrage
-function filterQuestions(courseSelection) {
-  if (!courseSelection || courseSelection === "all") return questions;
-  const num = parseInt(courseSelection, 10);
-  return questions.filter(q => q.coursNum === num);
-}
+const courses = artsSubject.courses;
+assert.equal(courses.length, 5, "Il doit y avoir 5 fiches de cours Arts");
+courses.forEach((c, idx) => {
+  assert.equal(c.num, idx + 1);
+  assert.ok(c.title && c.title.length > 5);
+  assert.ok(c.filConducteur && c.filConducteur.length > 100, `Cours ${c.num} : filConducteur manquant`);
+  assert.ok(Array.isArray(c.chronologie) && c.chronologie.length > 5, `Cours ${c.num} : chronologie insuffisante`);
+  assert.ok(Array.isArray(c.noms) && c.noms.length > 5, `Cours ${c.num} : noms insuffisants`);
+  assert.ok(Array.isArray(c.notions) && c.notions.length > 5, `Cours ${c.num} : notions insuffisantes`);
+});
 
-assert.equal(filterQuestions("all").length, 25);
-assert.equal(filterQuestions("1").length, 5);
-assert.equal(filterQuestions("2").length, 5);
-assert.equal(filterQuestions("3").length, 5);
-assert.equal(filterQuestions("4").length, 5);
-assert.equal(filterQuestions("5").length, 5);
+assert.equal(artsSubject.data.flashcards.length, 285, "285 flashcards doivent être générées depuis les 5 fiches");
 
-console.log("✓ tests/arts.test.js : 25 questions ICP validées avec succès (5 par cours)");
+console.log(`✓ tests/arts.test.js : 25 questions ICP, 6 sous-sections et 5 cours (${artsSubject.data.flashcards.length} flashcards) validés`);

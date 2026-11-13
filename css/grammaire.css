@@ -1,0 +1,392 @@
+/* ==========================================================================
+   Ateliers spécialisés Grammaire (Phrases, Stepper 4 étapes, Dictées, Mémento)
+   ========================================================================== */
+
+.sentence-box {
+  background-color: var(--bg-surface-soft);
+  border: 1px solid var(--border-strong);
+  border-left: 4px solid var(--accent-primary);
+  border-radius: var(--radius-sm);
+  padding: 1.15rem 1.35rem;
+  margin-bottom: 1.35rem;
+  font-size: 1.25rem;
+  font-family: var(--font-display);
+  line-height: 1.5;
+  color: var(--ink-primary);
+}
+
+.target-token {
+  background-color: var(--game-streak-bg);
+  color: var(--ink-primary);
+  padding: 0.12rem 0.42rem;
+  border-radius: 4px;
+  font-weight: 700;
+  border-bottom: 2px solid var(--game-streak-solid);
+}
+
+.decision-dual-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .decision-dual-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.choice-column {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1.1rem;
+}
+
+.choice-column h4 {
+  font-size: 0.92rem;
+  color: var(--accent-primary);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.choice-column h4 span.hint {
+  font-size: 0.76rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+
+/* Stepper 4 étapes */
+.stepper-nav {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  overflow-x: auto;
+  padding-bottom: 0.35rem;
+}
+
+.step-btn {
+  padding: 0.55rem 0.9rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+  background-color: var(--bg-surface);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  white-space: nowrap;
+}
+
+.step-btn.active {
+  background-color: var(--accent-primary);
+  color: var(--ink-inverted);
+  border-color: var(--accent-primary);
+}
+
+.step-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--bg-surface-soft);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.step-btn.active .step-num {
+  background-color: oklch(99.5% 0.003 85 / 0.25);
+}
+
+.step-content-box {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1.35rem;
+  box-shadow: var(--shadow-card);
+}
+
+/* Orthographe */
+.fill-gap-sentence {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  line-height: 1.55;
+  color: var(--ink-primary);
+  background-color: var(--bg-surface-soft);
+  padding: 1.15rem 1.35rem;
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--accent-burgundy);
+  margin-bottom: 1.25rem;
+}
+
+.gap-highlight {
+  display: inline-block;
+  min-width: 85px;
+  border-bottom: 2px dashed var(--accent-burgundy);
+  color: var(--accent-burgundy);
+  text-align: center;
+  font-weight: 700;
+  padding: 0 0.35rem;
+}
+
+/* Grille d'examen */
+.grid-builder-tools {
+  background-color: var(--bg-surface-soft);
+  border: 1px solid var(--border-strong);
+  padding: 1.1rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1.25rem;
+}
+
+/* Dictées vocales & diff LCS */
+.audio-player-panel {
+  background-color: var(--bg-surface-soft);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1.25rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.audio-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.playback-btns {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-audio {
+  background-color: var(--accent-primary);
+  color: var(--ink-inverted);
+  padding: 0.6rem 1.05rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.88rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn-audio:hover {
+  background-color: var(--accent-primary-hover);
+}
+
+.btn-audio-sub {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  color: var(--ink-primary);
+  padding: 0.52rem 0.9rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.speed-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.84rem;
+  color: var(--ink-secondary);
+}
+
+.speed-pill {
+  padding: 0.25rem 0.55rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+  background: var(--bg-surface);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.speed-pill.active {
+  background: var(--accent-burgundy);
+  color: var(--ink-inverted);
+  border-color: var(--accent-burgundy);
+}
+
+.sentence-stepper-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 0.8rem 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.dictation-input-area {
+  width: 100%;
+  min-height: 140px;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  background-color: var(--bg-surface);
+  color: var(--ink-primary);
+  resize: vertical;
+  margin-bottom: 0.65rem;
+}
+
+.dictation-diff-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-top: 1rem;
+  line-height: 2;
+  font-size: 1.05rem;
+}
+
+.diff-token {
+  display: inline-block;
+  padding: 0 0.28rem;
+  margin: 0 0.1rem;
+  border-radius: 4px;
+}
+
+.diff-token.correct {
+  color: var(--game-success);
+  background-color: var(--game-success-bg);
+}
+
+.diff-token.error {
+  color: var(--game-error);
+  background-color: var(--game-error-bg);
+  text-decoration: underline wavy var(--game-error);
+  font-weight: 700;
+}
+
+.diff-token.missing {
+  color: var(--game-streak);
+  background-color: var(--game-streak-bg);
+  text-decoration: line-through;
+}
+
+.diff-token.extra {
+  color: var(--game-streak);
+  background-color: var(--game-streak-bg);
+  text-decoration: underline wavy var(--game-streak);
+  font-weight: 700;
+}
+
+.dictation-score-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.2rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-soft);
+  border-left: 5px solid var(--accent-burgundy);
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.dictation-score-badge {
+  font-size: 1.35rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--accent-burgundy);
+}
+
+.grammar-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.grammar-rule-card {
+  background: var(--bg-surface-soft);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+  font-size: 0.9rem;
+}
+
+.grammar-rule-card strong {
+  color: var(--accent-primary);
+  font-family: var(--font-mono);
+}
+
+/* Mémento */
+.memento-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 840px) {
+  .memento-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.memento-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1.2rem 1.35rem;
+  box-shadow: var(--shadow-subtle);
+}
+
+.memento-card h3 {
+  color: var(--accent-primary);
+  border-bottom: 2px solid var(--accent-primary-soft);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.85rem;
+}
+
+.item-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.item-list li {
+  font-size: 0.93rem;
+}
+
+.item-list strong {
+  color: var(--accent-burgundy);
+}
+
+.item-list .subtext {
+  display: block;
+  font-size: 0.84rem;
+  color: var(--ink-muted);
+  margin-top: 0.15rem;
+}
+
+.item-list .astuce {
+  display: block;
+  font-size: 0.82rem;
+  background-color: var(--accent-primary-soft);
+  color: var(--accent-primary);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  margin-top: 0.35rem;
+}

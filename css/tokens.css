@@ -1,0 +1,132 @@
+/* ==========================================================================
+   Tokens de design & Polices locales (@font-face)
+   Palette OKLCH sobre + signaux francs de gamification Active Recall
+   ========================================================================== */
+
+/* Polices auto-hébergées (.woff2 dans assets/fonts/) */
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+  src: url("../assets/fonts/bricolage-grotesque-600-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+  src: url("../assets/fonts/bricolage-grotesque-600-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../assets/fonts/plus-jakarta-sans-400-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../assets/fonts/plus-jakarta-sans-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("../assets/fonts/jetbrains-mono-400-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("../assets/fonts/jetbrains-mono-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  /* Surfaces papier & encre (neutres chauds sobres) */
+  --bg-page: oklch(97.5% 0.008 85);
+  --bg-surface: oklch(99.5% 0.003 85);
+  --bg-surface-soft: oklch(94.5% 0.012 82);
+  --bg-surface-hover: oklch(96.2% 0.010 82);
+
+  --ink-primary: oklch(21% 0.020 255);
+  --ink-secondary: oklch(40% 0.022 255);
+  --ink-muted: oklch(50% 0.018 255);
+  --ink-inverted: oklch(99.5% 0.003 85);
+
+  --border-light: oklch(88% 0.014 82);
+  --border-strong: oklch(76% 0.022 82);
+
+  /* Accent structurel principal (sobre) */
+  --accent-primary: oklch(36% 0.095 250);
+  --accent-primary-hover: oklch(30% 0.095 250);
+  --accent-primary-soft: oklch(94.5% 0.022 250);
+
+  /* Couleurs de gamification & Active Recall (contrastes AA/AAA vérifiés) */
+  --game-success: oklch(38% 0.125 152);
+  --game-success-solid: oklch(43% 0.130 152);
+  --game-success-bg: oklch(94% 0.040 152);
+  --game-success-border: oklch(76% 0.090 152);
+
+  --game-error: oklch(42% 0.165 24);
+  --game-error-solid: oklch(46% 0.170 24);
+  --game-error-bg: oklch(94.5% 0.035 24);
+  --game-error-border: oklch(78% 0.105 24);
+
+  --game-streak: oklch(41% 0.125 58);
+  --game-streak-solid: oklch(58% 0.155 68);
+  --game-streak-bg: oklch(94.5% 0.050 78);
+  --game-streak-border: oklch(80% 0.105 74);
+
+  --game-recall: oklch(40% 0.135 258);
+  --game-recall-solid: oklch(44% 0.140 258);
+  --game-recall-hover: oklch(38% 0.140 258);
+  --game-recall-bg: oklch(94% 0.035 258);
+  --game-recall-border: oklch(78% 0.090 258);
+
+  --game-medium: oklch(41% 0.125 305);
+  --game-medium-bg: oklch(94.5% 0.030 305);
+  --game-medium-border: oklch(79% 0.085 305);
+
+  /* Alias sémantiques de compatibilité (utilisés par les ateliers Grammaire) */
+  --accent-navy: var(--accent-primary);
+  --accent-navy-soft: var(--accent-primary-soft);
+  --accent-burgundy: oklch(42% 0.135 12);
+  --accent-burgundy-soft: oklch(94.5% 0.030 12);
+  --state-success: var(--game-success);
+  --state-success-bg: var(--game-success-bg);
+  --state-error: var(--game-error);
+  --state-error-bg: var(--game-error-bg);
+  --state-warn: var(--game-streak);
+  --state-warn-bg: var(--game-streak-bg);
+
+  /* Familles typographiques */
+  --font-display: "Bricolage Grotesque", system-ui, -apple-system, sans-serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-serif: "Bricolage Grotesque", Georgia, serif;
+
+  /* Géométrie & élévation */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --shadow-subtle: 0 1px 2px oklch(21% 0.020 255 / 0.05);
+  --shadow-card: 0 3px 10px oklch(21% 0.020 255 / 0.06), 0 1px 2px oklch(21% 0.020 255 / 0.04);
+  --max-width: 1200px;
+}

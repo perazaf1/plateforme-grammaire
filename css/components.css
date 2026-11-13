@@ -1,0 +1,235 @@
+/* ==========================================================================
+   Composants réutilisables : Cartes, Filtres, Recherche, Tableaux Repères
+   ========================================================================== */
+
+.exercise-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1.4rem;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 1.35rem;
+}
+
+.empty-state-card {
+  text-align: center;
+  padding: 2.75rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.subject-modules-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.subject-module-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+  background-color: var(--bg-page);
+  color: var(--ink-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.subject-module-chip:hover {
+  border-color: var(--accent-primary);
+  background-color: var(--accent-primary-soft);
+  color: var(--accent-primary);
+}
+
+/* Barres de filtres & recherche */
+.filter-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.1rem;
+  padding: 0.85rem 1.1rem;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  flex-wrap: wrap;
+}
+
+.filter-toolbar-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ink-primary);
+  white-space: nowrap;
+}
+
+.filter-toolbar-spacer {
+  flex: 1;
+}
+
+.filter-select-wrap {
+  flex: 1;
+  min-width: 220px;
+}
+
+.filter-select {
+  width: 100%;
+  padding: 0.55rem 0.8rem;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--ink-primary);
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.filter-select-compact {
+  width: auto;
+  min-width: 150px;
+}
+
+.toolbar-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.search-bar-wrap {
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.7rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-surface);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--ink-primary);
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.95rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink-muted);
+  pointer-events: none;
+}
+
+/* Toolbars d'action en bas de carte */
+.action-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  margin-top: 1.35rem;
+  flex-wrap: wrap;
+}
+
+.toolbar-right-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Tableaux (Repères & Grille d'examen) */
+.exam-table-container {
+  overflow-x: auto;
+  margin: 1rem 0 1.25rem;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+}
+
+.exam-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.exam-table th,
+.exam-table td {
+  padding: 0.8rem 0.95rem;
+  border: 1px solid var(--border-light);
+  vertical-align: top;
+}
+
+.exam-table th {
+  background-color: var(--accent-primary);
+  color: var(--ink-inverted);
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.exam-table tr:nth-child(even) td {
+  background-color: var(--bg-page);
+}
+
+.exam-table .col-group { width: 25%; font-weight: 600; }
+.exam-table .col-func { width: 25%; color: var(--accent-burgundy); font-weight: 600; }
+.exam-table .col-nature { width: 25%; }
+.exam-table .col-detail { width: 25%; color: var(--ink-secondary); }
+
+/* Fiches & Repères */
+.repere-course-title {
+  font-size: 1.28rem;
+  margin-bottom: 0.9rem;
+}
+
+.fil-conducteur-box {
+  background-color: var(--accent-primary-soft);
+  border-left: 4px solid var(--accent-primary);
+  padding: 0.95rem 1.15rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.35rem;
+  font-size: 0.94rem;
+  color: var(--ink-primary);
+}
+
+.repere-table-block {
+  margin-top: 1.2rem;
+}
+
+.repere-table-block h4 {
+  color: var(--accent-primary);
+  margin-bottom: 0.45rem;
+  font-size: 1rem;
+}
+
+.repere-count {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--ink-muted);
+}
+
+/* Jauge horizontale générique */
+.fc-progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: var(--border-light);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.fc-progress-fill {
+  height: 100%;
+  background-color: var(--game-success-solid);
+  transition: width 0.2s ease;
+}
