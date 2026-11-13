@@ -72,12 +72,11 @@
       </div>
     `;
 
-    let paginationBtns = `<div style="display:flex; gap:0.35rem; margin-bottom:1.25rem; flex-wrap:wrap;">`;
+    let paginationBtns = `<div class="phrases-pagination">`;
     list.forEach((p, i) => {
       const isActive = i === localState.phrases.currentIndex;
-      const activeStyle = isActive ? 'style="background:var(--accent-navy); color:#fff; font-weight:bold;"' : "";
       const checkMark = global.PlatformState.isCompleted(`grammaire:phrase:${p.id}`) ? " ✓" : "";
-      paginationBtns += `<button type="button" class="btn-secondary" style="padding:0.35rem 0.65rem; font-size:0.85rem;" ${activeStyle} data-phrase-idx="${i}">Phrase ${i + 1}${checkMark}</button>`;
+      paginationBtns += `<button type="button" class="btn-secondary phrase-page-btn${isActive ? " active" : ""}" data-phrase-idx="${i}">Phrase ${i + 1}${checkMark}</button>`;
     });
     paginationBtns += `</div>`;
 
@@ -151,7 +150,7 @@
     const canValidate = localState.phrases.selectedNature && localState.phrases.selectedFonction && !localState.phrases.isValidated;
     const actionsHtml = `
       <div class="action-toolbar">
-        <div style="display:flex; gap:0.5rem;">
+        <div class="phrase-nav-pair">
           <button type="button" class="btn-secondary" id="phrase-prev-btn" ${localState.phrases.currentIndex === 0 ? "disabled" : ""}>← Phrase précédente</button>
           <button type="button" class="btn-secondary" id="phrase-next-btn" ${localState.phrases.currentIndex === total - 1 ? "disabled" : ""}>Phrase suivante →</button>
         </div>
@@ -244,15 +243,13 @@
     const casData = getData().demonstrationsCas.find((c) => c.id === localState.methode.currentCas) || getData().demonstrationsCas[0];
 
     const casSelector = `
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
-        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-          <button type="button" class="btn-secondary ${localState.methode.currentCas === "cas1" ? "active" : ""}" data-cas="cas1">
-            Cas n°1 : Phrase simple (1 prop.)
-          </button>
-          <button type="button" class="btn-secondary ${localState.methode.currentCas === "cas2" ? "active" : ""}" data-cas="cas2">
-            Cas n°2 : Phrase complexe (2 props.)
-          </button>
-        </div>
+      <div class="cas-selector-row">
+        <button type="button" class="btn-secondary ${localState.methode.currentCas === "cas1" ? "active" : ""}" data-cas="cas1">
+          Cas n°1 : Phrase simple (1 prop.)
+        </button>
+        <button type="button" class="btn-secondary ${localState.methode.currentCas === "cas2" ? "active" : ""}" data-cas="cas2">
+          Cas n°2 : Phrase complexe (2 props.)
+        </button>
       </div>
       <div class="sentence-box" style="margin-bottom:1.5rem;">« ${escapeHtml(casData.phrase)} »</div>
     `;
@@ -294,7 +291,7 @@
     } else if (localState.methode.currentEtape === 2) {
       stepContent += `<div style="display:flex; flex-direction:column; gap:1rem;">`;
       if (casData.etape2.blocs) {
-        stepContent += `<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1rem;">
+        stepContent += `<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap:1rem;">
           ${casData.etape2.blocs.map((b) => `
             <div style="background:var(--bg-surface-soft); padding:1rem; border-radius:var(--radius-sm); border-left:4px solid var(--accent-navy);">
               <strong style="font-size:1.05rem; color:var(--accent-navy);">${escapeHtml(b.bloc)}</strong>
@@ -307,7 +304,7 @@
         stepContent += casData.etape2.propositions.map((prop) => `
           <div style="background:var(--bg-surface-soft); padding:1rem; border-radius:var(--radius-sm); margin-bottom:0.75rem;">
             <h4 style="color:var(--accent-navy); margin-bottom:0.75rem;">${escapeHtml(prop.nom)}</h4>
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:0.75rem;">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap:0.75rem;">
               ${prop.blocs.map((b) => `
                 <div style="background:#fff; padding:0.75rem; border-radius:var(--radius-sm); border:1px solid var(--border-light);">
                   <strong>${escapeHtml(b.bloc)}</strong>
@@ -543,7 +540,7 @@
     const totalPhrases = current.phrases.length;
     const currentPhrase = current.phrases[localState.dictees.currentPhraseIndex];
 
-    let selectorBtns = `<div style="display:flex; gap:0.5rem; margin-bottom:1.25rem; flex-wrap:wrap;">`;
+    let selectorBtns = `<div class="cas-selector-row">`;
     list.forEach((d, idx) => {
       const isActive = idx === localState.dictees.currentIndex;
       const shortTitle = `${d.titre.split(" : ")[0]} : ${d.titre.split(" : ")[1].split(" (")[0]}`;
@@ -580,12 +577,12 @@
           </div>
 
           <div class="sentence-stepper-box">
-            <div style="display:flex; align-items:center; gap:0.5rem;">
-              <button type="button" class="btn-secondary" id="btn-prev-phrase" style="padding:0.4rem 0.75rem;" ${localState.dictees.currentPhraseIndex === 0 ? "disabled" : ""}>← Précédente</button>
+            <div class="sentence-stepper-nav">
+              <button type="button" class="btn-secondary" id="btn-prev-phrase" ${localState.dictees.currentPhraseIndex === 0 ? "disabled" : ""}>← Précédente</button>
               <span style="font-weight:600; font-size:0.9rem; color:var(--accent-navy);">
                 Phrase ${localState.dictees.currentPhraseIndex + 1} / ${totalPhrases}
               </span>
-              <button type="button" class="btn-secondary" id="btn-next-phrase" style="padding:0.4rem 0.75rem;" ${localState.dictees.currentPhraseIndex === totalPhrases - 1 ? "disabled" : ""}>Suivante →</button>
+              <button type="button" class="btn-secondary" id="btn-next-phrase" ${localState.dictees.currentPhraseIndex === totalPhrases - 1 ? "disabled" : ""}>Suivante →</button>
             </div>
             <button type="button" class="btn-audio" id="btn-play-phrase" style="background:var(--accent-burgundy);">🔊 Écouter cette phrase</button>
           </div>
@@ -832,11 +829,11 @@
     const appendRow = (row = { group: "", func: "", nature: "", motFunc: "" }) => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td><input type="text" value="${escapeHtml(row.group)}" placeholder="Ex: Entre les branches" style="width:100%; padding:0.4rem; border:1px solid var(--border-light); border-radius:3px;"></td>
-        <td><input type="text" value="${escapeHtml(row.func)}" placeholder="Ex: CC de lieu" style="width:100%; padding:0.4rem; border:1px solid var(--border-light); border-radius:3px;"></td>
-        <td><input type="text" value="${escapeHtml(row.nature)}" placeholder="Ex: Préposition" style="width:100%; padding:0.4rem; border:1px solid var(--border-light); border-radius:3px;"></td>
-        <td><input type="text" value="${escapeHtml(row.motFunc)}" placeholder="Ex: Introduit le CC" style="width:100%; padding:0.4rem; border:1px solid var(--border-light); border-radius:3px;"></td>
-        <td style="text-align:center;"><button type="button" class="btn-secondary del-row-btn" style="padding:0.25rem 0.5rem; color:var(--state-error);" aria-label="Supprimer cette ligne">✕</button></td>
+        <td><input type="text" class="grid-cell-input" value="${escapeHtml(row.group)}" placeholder="Ex: Entre les branches"></td>
+        <td><input type="text" class="grid-cell-input" value="${escapeHtml(row.func)}" placeholder="Ex: CC de lieu"></td>
+        <td><input type="text" class="grid-cell-input" value="${escapeHtml(row.nature)}" placeholder="Ex: Préposition"></td>
+        <td><input type="text" class="grid-cell-input" value="${escapeHtml(row.motFunc)}" placeholder="Ex: Introduit le CC"></td>
+        <td style="text-align:center;"><button type="button" class="btn-secondary del-row-btn" aria-label="Supprimer cette ligne">✕</button></td>
       `;
       tableBody.appendChild(tr);
       tr.querySelectorAll("input").forEach((inp) => inp.addEventListener("input", syncFromDom));
