@@ -1,6 +1,6 @@
 # Atelier d'Entraînement — Plateforme Interactive Multi-Matières
 
-> **Site en ligne :** [https://grammaireplateforme.netlify.app/](https://grammaireplateforme.netlify.app/)
+> **Site en ligne :** [https://icpplateforme.netlify.app/](https://icpplateforme.netlify.app/)
 
 Application web statique modulaire (HTML5, CSS3 OKLCH, JavaScript vanilla, sans dépendance ni étape de build) organisée en deux niveaux : **Menu des matières** (`index.html`) puis **Sous-sections & Active Recall** (`matiere.html`).
 
